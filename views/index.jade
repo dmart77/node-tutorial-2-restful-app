@@ -10,18 +10,21 @@ block content
         // USER INFO
         #userInfo
             h2 User Info
-            p
+            p(data-bind='with: current')
                 strong Name:
-                |  <span id='userInfoName'></span>
+                span(data-bind='text: fullname')
                 br
                 strong Age:
-                |  <span id='userInfoAge'></span>
+                span(data-bind='text: age')
                 br
                 strong Gender:
-                |  <span id='userInfoGender'></span>
+                span(data-bind='text: gender')
                 br
                 strong Location:
-                |  <span id='userInfoLocation'></span>
+                span(data-bind='text: location')
+                br
+                strong Email:
+                span(data-bind='text: email')                
         // /USER INFO
 
         // USER LIST
@@ -32,23 +35,31 @@ block content
                     th UserName
                     th Email
                     th Delete?
-                tbody
+                tbody(data-bind='foreach: users')
+                    tr 
+                        td
+                            a(href='#', data-bind='click: $parent.showUserInfo')
+                                span(data-bind='text: username')
+                        td
+                            span(data-bind='text: email')
+                        td
+                            a(href='#', data-bind='click: $parent.deleteUser') Delete
         // /USER LIST
 
         // ADD USER
         h2 Add User
         #addUser
-            fieldset
-                input#inputUserName(type='text', placeholder='Username')
-                input#inputUserEmail(type='text', placeholder='Email')
+            fieldset(data-bind='with: newUser')
+                input(data-bind='textInput: username', type='text', placeholder='Username')
+                input(data-bind='textInput: email', type='text', placeholder='Email')
                 br
-                input#inputUserFullname(type='text', placeholder='Full Name')
-                input#inputUserAge(type='text', placeholder='Age')
+                input(data-bind='textInput: fullname', type='text', placeholder='Full Name')
+                input(data-bind='textInput: age', type='text', placeholder='Age')
                 br
-                input#inputUserLocation(type='text', placeholder='Location')
-                input#inputUserGender(type='text', placeholder='gender')
+                input(data-bind='textInput: location', type='text', placeholder='Location')
+                input(data-bind='textInput: gender', type='text', placeholder='gender')
                 br
-                button#btnAddUser Add User
+                button(data-bind='enable: $parent.isNewUserValid(), click: $parent.addUser') Add User                
         // /ADD USER
 
     // /WRAPPER
